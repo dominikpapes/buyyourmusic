@@ -5,7 +5,7 @@ register = template.Library()
 @register.filter
 def stars(rating):
     """Returns a string of filled and empty stars."""
-    rating = int(rating)
+    rating = int(round(rating))
     total_stars = ""
     for i in range(1,6):
         if i <= rating:
