@@ -1,10 +1,18 @@
 from django.db import models
 
 
+class Author(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return f"{self.name}"
+
+
 class Album(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
-    author = models.CharField(max_length=200)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
     year = models.IntegerField()
     price = models.FloatField()
     cover = models.ImageField(upload_to='album_covers')

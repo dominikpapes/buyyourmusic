@@ -14,14 +14,7 @@ def album_detail(request, id):
     album = get_object_or_404(Album, pk=id)
     context = {
         "album": album,
-        "reviews": [
-            {
-                "id": 1,
-                "user": "user",
-                "rating": 5,
-                "review": "Written review"
-            },
-        ]
+        "reviews": album.review_set.all()
     }
     return render(request, "bym/album_detail.html", context)
 
