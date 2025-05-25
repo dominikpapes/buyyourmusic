@@ -14,65 +14,73 @@
         <h4 class="text-success">${{ album.price }}</h4>
         <p>
             {% if album.rating > 0.0 %}
-                <strong>Rating:</strong>
-                <span class="text-warning">
-                    {{ album.rating|stars }}
-                </span>
-                ({{ album.rating }})
+            <strong>Rating:</strong>
+            <span class="text-warning">
+                {{ album.rating|stars }}
+            </span>
+            ({{ album.rating }})
             {% else %}
-                <strong>No ratings yet</strong>
+            <strong>No ratings yet</strong>
             {% endif %}
         </p>
-        <a href="#" class="btn btn-primary mt-3">Buy Now</a>
+        {% if album.quantity > 0 %}
+        <form method="POST" action="{% url 'buy_album' album.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary mt-3">Buy Now ({{ album.quantity }} in stock)</button>
+        </form>
+        {% else %}
+        <p class="text-danger mt-3"><strong>Out of stock</strong></p>
+        {% endif %}
+
     </div>
 </div>
 
 <h4>Leave a Review</h4>
 
 {% if user.is_authenticated %}
-    {% if has_reviewed %}
-        <div class="alert alert-info">
-            You have already reviewed this album.
-        </div>
-    {% else %}
-        <form method="POST" class="mb-5">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="id_rating" class="form-label">Rating (1–5)</label>
-                {{ form.rating }}
-            </div>
-            <div class="mb-3">
-                <label for="id_review" class="form-label">Your Review</label>
-                {{ form.review }}
-            </div>
-            <button type="submit" class="btn btn-success">Submit Review</button>
-        </form>
-    {% endif %}
+{% if has_reviewed %}
+<div class="alert alert-info">
+    You have already reviewed this album.
+</div>
 {% else %}
-    <p><a href="{% url 'login' %}?next={{ request.path }}">Log in</a> to leave a review.</p>
+<form method="POST" class="mb-5">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="id_rating" class="form-label">Rating (1–5)</label>
+        {{ form.rating }}
+    </div>
+    <div class="mb-3">
+        <label for="id_review" class="form-label">Your Review</label>
+        {{ form.review }}
+    </div>
+    <button type="submit" class="btn btn-success">Submit Review</button>
+</form>
+{% endif %}
+{% else %}
+<p><a href="{% url 'login' %}?next={{ request.path }}">Log in</a> to leave a review.</p>
 {% endif %}
 
 
 <h4>Reviews</h4>
 {% if reviews %}
-    {% for review in reviews %}
-        <div class="card mb-3 shadow-sm">
-            <div class="card-body">
-                <h6 class="card-subtitle mb-2 text-muted">
-                    {{ review.user }} - Rated {{ review.rating|stars }}
-                    {% if user == review.user %}
-                        <a href="{% url 'delete_review' review.id %}" class="btn btn-sm btn-outline-danger float-end"
-                           onclick="return confirm('Are you sure you want to delete your review?');">
-                            Delete
-                        </a>
-                    {% endif %}
-                </h6>
-                <p class="card-text">{{ review.review }}</p>
-            </div>
-        </div>
-    {% endfor %}
+{% for review in reviews %}
+<div class="card mb-3 shadow-sm">
+    <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted">
+            {{ review.user }} - Rated {{ review.rating|stars }}
+            {% if user == review.user %}
+            <a href="{% url 'delete_review' review.id %}" class="btn btn-sm btn-outline-danger float-end"
+                onclick="return confirm('Are you sure you want to delete your review?');">
+                Delete
+            </a>
+            {% endif %}
+        </h6>
+        <p class="card-text">{{ review.review }}</p>
+    </div>
+</div>
+{% endfor %}
 {% else %}
-    <p class="text-muted">No reviews yet.</p>
+<p class="text-muted">No reviews yet.</p>
 {% endif %}
 
 

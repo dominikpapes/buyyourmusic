@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path("", views.home, name="home"),
     path('albums/<int:id>/', views.album_detail, name="album_detail"),
+    path('album/<int:album_id>/buy/', views.buy_album, name='buy_album'),
     path("reviews/<int:review_id>/delete/", views.delete_review, name="delete_review"),
     path('bym_admin/', views.admin_home, name='admin_home'),
     path('bym_adim/albums/new/', views.album_create, name='album_create'),

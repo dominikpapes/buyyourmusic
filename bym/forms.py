@@ -17,12 +17,13 @@ class AlbumForm(forms.ModelForm):
 
     class Meta:
         model = Album
-        fields = ['title', 'author', 'new_author', 'year', 'price', 'cover']
+        fields = ['title', 'author', 'new_author', 'year', 'price', 'quantity', 'cover']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'author': forms.Select(attrs={'class': 'form-control'}),
             'year': forms.NumberInput(attrs={'class': 'form-control', 'min': 1800, 'max': 2100, 'step': 1}),
             'price': forms.NumberInput(attrs={'class': 'form-control', 'min': 0, 'step': 0.01}),
+            'quantity': forms.NumberInput(attrs={'class': 'form-control', 'min': 0, 'step': 1}),
             'cover': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
 

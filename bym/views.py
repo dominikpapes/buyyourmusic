@@ -4,6 +4,10 @@ from .forms import AlbumForm, ReviewForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.urls import reverse
+from django.utils.http import urlencode
+import os
 
 # Create your views here.
 
@@ -29,8 +33,8 @@ def album_detail(request, id):
     album = get_object_or_404(Album, pk=id)
     reviews = Review.objects.filter(album=album).order_by("-id")
 
-    form = ReviewForm()  # always define form
-    has_reviewed = False  # default to False
+    form = ReviewForm()
+    has_reviewed = False
 
     if request.user.is_authenticated:
         user_review = Review.objects.filter(user=request.user, album=album).first()
@@ -38,7 +42,10 @@ def album_detail(request, id):
 
     if request.method == "POST":
         if not request.user.is_authenticated:
-            return redirect("login")  # or show a message
+            # Redirect to login with ?next= to return after login
+            login_url = f"{reverse('login')}?{urlencode({'next': request.path})}"
+            return redirect(login_url)
+
         if has_reviewed:
             return redirect("album_detail", id=album.id)
 
@@ -61,6 +68,17 @@ def album_detail(request, id):
     }
     return render(request, "bym/album_detail.html", context)
 
+
+def buy_album(request, album_id):
+    album = get_object_or_404(Album, id=album_id)
+
+    if request.method == 'POST':
+        if album.quantity > 0:
+            album.sell()
+            messages.success(request, f"You bought '{album.title}'.")
+        else:
+            messages.error(request, f"'{album.title}' is out of stock.")
+        return redirect('album_detail', id=album.id)
 
 
 @login_required
@@ -121,7 +139,14 @@ def album_edit(request, id):
 
 def album_delete(request, id):
     album = get_object_or_404(Album, id=id)
+
     if request.method == 'POST':
+        # Save the file path before deleting the album
+        if album.cover:
+            cover_path = album.cover.path
+            if os.path.exists(cover_path):
+                os.remove(cover_path)
+
         album.delete()
-        return redirect('admin_home')
-    return render(request, 'bym/confirm_delete.html', {'album': album})
+    return redirect('admin_home')
+

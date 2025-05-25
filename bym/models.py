@@ -16,6 +16,7 @@ class Album(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     year = models.IntegerField()
     price = models.FloatField()
+    quantity = models.IntegerField()
     cover = models.ImageField(upload_to='album_covers')
     rating = models.FloatField(default=0.0)
 
@@ -29,6 +30,11 @@ class Album(models.Model):
         else:
             self.rating = 0.0
         self.save()
+
+    def sell(self):
+        if self.quantity > 0:
+            self.quantity -= 1
+            self.save()
 
 
 class Review(models.Model):
