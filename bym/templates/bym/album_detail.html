@@ -1,28 +1,27 @@
 {% extends "base.html" %}
 {% load static %}
+{% load review_extras %}
 {% block title %}{{ title }} - Album Details{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-4">
-        <img src="{% static cover %}" class="img-fluid rounded shadow-sm" alt="{{ title }} Cover">
+        <img src="{{ album.cover.url }}" class="img-fluid rounded shadow-sm" alt="{{ album.title }} Cover">
     </div>
     <div class="col-md-8">
-        <h2>{{ title }}</h2>
-        <p class="text-muted">{{ author }} &middot; {{ year }}</p>
-        <h4 class="text-success">${{ price }}</h4>
+        <h2>{{ album.title }}</h2>
+        <p class="text-muted">{{ album.author }} &middot; {{ album.year }}</p>
+        <h4 class="text-success">${{ album.price }}</h4>
         <p>
-            <strong>Rating:</strong>
-            <span class="text-warning">
-                {% for i in "12345" %}
-                    {% if forloop.counter <= rating %}
-                        ★
-                    {% else %}
-                        ☆
-                    {% endif %}
-                {% endfor %}
-            </span>
-            ({{ rating }})
+            {% if album.rating > 0.0 %}
+                <strong>Rating:</strong>
+                <span class="text-warning">
+                    {{ album.rating|stars }}
+                </span>
+                ({{ album.rating }})
+            {% else %}
+                <strong>No ratings yet</strong>
+            {% endif %}
         </p>
         <a href="#" class="btn btn-primary mt-3">Buy Now</a>
     </div>
@@ -35,7 +34,7 @@
     {% for review in reviews %}
         <div class="card mb-3 shadow-sm">
             <div class="card-body">
-                <h6 class="card-subtitle mb-2 text-muted">{{ review.user }} - Rated {{ review.rating }}/5</h6>
+                <h6 class="card-subtitle mb-2 text-muted">{{ review.user }} - Rated {{ review.rating|stars }}</h6>
                 <p class="card-text">{{ review.review }}</p>
             </div>
         </div>

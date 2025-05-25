@@ -9,8 +9,8 @@ class Album(models.Model):
     author = models.CharField(max_length=200)
     year = models.IntegerField()
     price = models.FloatField()
-    cover = models.CharField(max_length=200)
-    rating = models.FloatField()
+    cover = models.ImageField(upload_to='album_covers')
+    rating = models.FloatField(default=0.0)
 
 
 class User(models.Model):

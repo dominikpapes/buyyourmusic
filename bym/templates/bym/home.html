@@ -4,14 +4,12 @@
 {% block title %}Home - Buy Your Music{% endblock %}
 
 {% block content %}
-<h1 class="mb-4">Welcome to {{ site_name }}</h1>
-
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
     {% for album in albums %}
     <div class="col">
         <a href="{% url 'album_detail' album.id %}" class="text-decoration-none text-dark">
             <div class="card h-100">
-                <img src="{% static album.cover %}" class="card-img-top" alt="{{ album.title }}">
+                <img src="{{ album.cover.url }}" class="card-img-top" alt="{{ album.title }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ album.title }}</h5>
                     <p class="card-text">
