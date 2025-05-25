@@ -1,3 +1,25 @@
+# Installation and Running:
+### Creating a Python virtual environment
+python -m venv .venv
+
+### Activating the virtual environment on different operating systems
+source .venv/bin/activate # Linux  
+source .venv\bin\activate # Windows CMD  
+.\venv\Scripts\activate.bat # Windows PowerShell  
+
+### Installing required dependencies
+pip install -r requirements.txt  
+
+### Migrating the database
+python manage.py makemigrations  
+python manage.py migrate  
+
+### Running the application
+python manage.py runserver  
+
+
+-------------------------------------------------------------------
+
 # Instalacija i pokretanje:
 ### Stvaranje Python virtualnog okruženja
 python -m venv .venv
@@ -16,3 +38,6 @@ python manage.py migrate
 
 ### Pokretanje aplikacije
 python manage.py runserver  
+
+
+
