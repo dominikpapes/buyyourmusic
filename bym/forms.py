@@ -1,5 +1,5 @@
 from django import forms
-from .models import Album
+from .models import Album, Review
 
 class AlbumForm(forms.ModelForm):
     class Meta:
@@ -12,3 +12,14 @@ class AlbumForm(forms.ModelForm):
             'price': forms.NumberInput(attrs={'class': 'form-control', 'min': 0, 'step': 0.01}),
             'cover': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['rating', 'review']
+        widgets = {
+            'rating': forms.NumberInput(attrs={'min': 1, 'max': 5, 'class': 'form-control'}),
+            'review': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
+        }
+
