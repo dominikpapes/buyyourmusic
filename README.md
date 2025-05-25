@@ -1,4 +1,4 @@
-# Installation and Running:
+# Installation and Running - development:
 ### Creating a Python virtual environment
 python -m venv .venv
 
@@ -20,7 +20,7 @@ python manage.py runserver
 
 -------------------------------------------------------------------
 
-# Instalacija i pokretanje:
+# Instalacija i pokretanje - development:
 ### Stvaranje Python virtualnog okruženja
 python -m venv .venv
 
