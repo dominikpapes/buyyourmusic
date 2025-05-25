@@ -39,5 +39,5 @@ python manage.py migrate
 ### Pokretanje aplikacije
 python manage.py runserver  
 
-
-
+### Admin panel URL
+[localhost:8000/bym_admin](localhost:8000/bym_admin)
