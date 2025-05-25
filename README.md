@@ -17,6 +17,8 @@ python manage.py migrate
 ### Running the application
 python manage.py runserver  
 
+### Admin page URL
+[localhost:8000/bym_admin](localhost:8000/bym_admin)
 
 -------------------------------------------------------------------
 
@@ -39,5 +41,5 @@ python manage.py migrate
 ### Pokretanje aplikacije
 python manage.py runserver  
 
-### Admin panel URL
+### URL administratorske stranice
 [localhost:8000/bym_admin](localhost:8000/bym_admin)
