@@ -4,7 +4,6 @@ python -m venv .venv
 
 ### Activating the virtual environment on different operating systems
 source .venv/bin/activate # Linux  
-source .venv\bin\activate # Windows CMD  
 .venv\Scripts\activate # Windows PowerShell  
 
 ### Installing required dependencies
@@ -28,7 +27,6 @@ python -m venv .venv
 
 ### Pokretanje virtualnog okruženja na različitim operacijskim sustavima
 source .venv/bin/activate # Linux  
-source .venv\bin\activate # Windows CMD  
 .venv\Scripts\activate # Windows PowerShell  
 
 ### Instaliranje potrebnih ovisnosti
